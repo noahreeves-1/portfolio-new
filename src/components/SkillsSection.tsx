@@ -29,6 +29,7 @@ const skillsData: Record<string, Skill[]> = {
       icon: "/skills/typescript.svg",
       color: "bg-blue-600",
     },
+    { name: "Python", icon: "/skills/python.svg", color: "bg-blue-500" },
     { name: "SQL", icon: "/skills/sql.svg", color: "bg-blue-400" },
   ],
   frontend: [
@@ -49,8 +50,7 @@ const skillsData: Record<string, Skill[]> = {
     { name: "NestJS", icon: "/skills/nestjs.svg", color: "bg-red-600" },
     { name: "AdonisJS", icon: "/skills/adonis.svg", color: "bg-purple-700" },
     { name: "Firebase", icon: "/skills/firebase.svg", color: "bg-yellow-600" },
-    { name: "Wasp", icon: "/skills/wasp.svg", color: "bg-yellow-500" },
-    { name: "OpenSaaS", icon: "/skills/opensaas.svg", color: "bg-blue-700" },
+    { name: "OpenSaaS", icon: "/skills/opensaas.webp", color: "bg-blue-700" },
   ],
   databases: [
     {
@@ -85,6 +85,22 @@ const skillsData: Record<string, Skill[]> = {
     { name: "Turbo", icon: "/skills/turbo.svg", color: "bg-red-500" },
     { name: "Nx", icon: "/skills/nx.svg", color: "bg-blue-700" },
     { name: "OpenAI", icon: "/skills/openai.svg", color: "bg-green-600" },
+  ],
+  businessTools: [
+    { name: "Tableau", icon: "/skills/react.svg", color: "bg-blue-600" },
+    { name: "Power BI", icon: "/skills/powerbi.svg", color: "bg-yellow-500" },
+    { name: "Blue Prism", icon: "/skills/blueprism.svg", color: "bg-blue-700" },
+    {
+      name: "PowerPoint",
+      icon: "/skills/powerpoint.svg",
+      color: "bg-orange-600",
+    },
+    { name: "Excel", icon: "/skills/excel.svg", color: "bg-green-600" },
+    {
+      name: "SharePoint",
+      icon: "/skills/sharepoint.svg",
+      color: "bg-blue-500",
+    },
   ],
 };
 
@@ -284,6 +300,7 @@ export default function SkillsSection() {
                   width={30}
                   height={30}
                   className="object-contain"
+                  unoptimized
                 />
               </div>
               <span className="font-medium text-center">{skill.name}</span>
@@ -314,6 +331,7 @@ export default function SkillsSection() {
                         width={30}
                         height={30}
                         className="object-contain"
+                        unoptimized
                       />
                     </div>
                     <span className="font-medium text-center">
@@ -344,6 +362,7 @@ export default function SkillsSection() {
                         width={30}
                         height={30}
                         className="object-contain"
+                        unoptimized
                       />
                     </div>
                     <span className="font-medium text-center">
@@ -374,6 +393,7 @@ export default function SkillsSection() {
                         width={30}
                         height={30}
                         className="object-contain"
+                        unoptimized
                       />
                     </div>
                     <span className="font-medium text-center">
@@ -404,6 +424,7 @@ export default function SkillsSection() {
                         width={30}
                         height={30}
                         className="object-contain"
+                        unoptimized
                       />
                     </div>
                     <span className="font-medium text-center">
@@ -434,6 +455,7 @@ export default function SkillsSection() {
                         width={30}
                         height={30}
                         className="object-contain"
+                        unoptimized
                       />
                     </div>
                     <span className="font-medium text-center">
@@ -464,6 +486,38 @@ export default function SkillsSection() {
                         width={30}
                         height={30}
                         className="object-contain"
+                        unoptimized
+                      />
+                    </div>
+                    <span className="font-medium text-center">
+                      {skill.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Business Tools Section */}
+            <div ref={(el) => addToRefs(el, 6)} className="skill-category">
+              <h3 className="text-2xl font-bold mb-6 text-teal-400 border-b border-slate-700 pb-2">
+                Business Tools & Applications
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                {skillsData.businessTools.map((skill) => (
+                  <div
+                    key={skill.name}
+                    className="skill-item flex flex-col items-center bg-slate-800 rounded-lg p-4 transition-transform hover:transform hover:translate-y-[-5px] hover:shadow-lg"
+                  >
+                    <div
+                      className={`w-12 h-12 mb-3 rounded-full flex items-center justify-center bg-slate-700/90 border border-slate-600 ${skill.hoverColor} ${skill.ringShadow} transition-all duration-300 ring-0 hover:ring-2 hover:border-slate-500`}
+                    >
+                      <Image
+                        src={skill.icon}
+                        alt={skill.name}
+                        width={30}
+                        height={30}
+                        className="object-contain"
+                        unoptimized
                       />
                     </div>
                     <span className="font-medium text-center">

@@ -21,7 +21,7 @@ export default function ResumePage() {
           <div className="space-y-12">
             {/* Personal Information */}
             <div>
-              <h2 className="text-2xl font-bold mb-4">Your Name</h2>
+              <h2 className="text-2xl font-bold mb-4">Noah Kim</h2>
               <p className="text-slate-300">
                 Location: Your City, Country
                 <br />
@@ -29,7 +29,7 @@ export default function ResumePage() {
                 <br />
                 LinkedIn: linkedin.com/in/yourname
                 <br />
-                GitHub: github.com/yourusername
+                GitHub: github.com/noahreeves-1
               </p>
             </div>
 

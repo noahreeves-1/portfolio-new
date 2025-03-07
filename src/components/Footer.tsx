@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <Link href="/" className="text-2xl font-bold text-teal-400">
-              Your Name
+              Noah Kim
             </Link>
             <p className="text-slate-400 mt-2">
               From management consultant to developer
@@ -19,7 +19,7 @@ export default function Footer() {
 
           <div className="flex gap-6">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/noahreeves-1"
               target="_blank"
               rel="noopener noreferrer"
               className="text-slate-400 hover:text-teal-400 transition-colors"
@@ -49,7 +49,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 pt-8 border-t border-slate-800 text-center text-slate-500">
-          <p>© {currentYear} Your Name. All rights reserved.</p>
+          <p>© {currentYear} Noah Kim. All rights reserved.</p>
         </div>
       </div>
     </footer>

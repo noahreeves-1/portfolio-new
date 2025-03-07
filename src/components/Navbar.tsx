@@ -39,7 +39,7 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold text-teal-400">
-          Your Name
+          Noah Kim
         </Link>
 
         {/* Desktop Navigation */}
@@ -48,8 +48,12 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className={`hover:text-teal-400 transition-colors ${
-                pathname === link.href ? "text-teal-400" : "text-white"
+              className={`transition-colors ${
+                pathname === link.href
+                  ? "text-teal-400"
+                  : scrolled
+                  ? "text-white hover:text-teal-400"
+                  : "text-blue-700 hover:text-teal-400"
               }`}
             >
               {link.name}
@@ -59,7 +63,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white"
+          className={`md:hidden ${scrolled ? "text-white" : "text-blue-700"}`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >

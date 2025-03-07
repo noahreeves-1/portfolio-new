@@ -278,7 +278,7 @@ export default function PowerPointHero() {
             </div>
             <div className="flex justify-center gap-8 mt-12">
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/noahreeves-1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 transition-colors hover-scale"
@@ -355,25 +355,18 @@ export default function PowerPointHero() {
       {/* Navigation arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 z-20 shadow-md"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 z-20 shadow-md arrow-cursor-left"
         aria-label="Previous slide"
       >
         <FaChevronLeft size={18} />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 z-20 shadow-md"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 z-20 shadow-md arrow-cursor-right"
         aria-label="Next slide"
       >
         <FaChevronRight size={18} />
       </button>
-
-      {/* PowerPoint-style professional design elements */}
-      <div className="absolute top-6 right-6 flex gap-1.5">
-        <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-        <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-        <div className="w-2 h-2 rounded-full bg-blue-400"></div>
-      </div>
 
       {/* PowerPoint professional footer */}
       <div className="absolute bottom-2 right-4 text-gray-500 text-sm font-medium">

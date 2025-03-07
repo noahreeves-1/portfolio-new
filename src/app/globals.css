@@ -27,9 +27,22 @@ body {
 
 /* PowerPoint cursor - custom class to be used with the PowerPoint hero */
 .powerpoint-cursor {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'><path d='M5 12h14'></path><path d='M12 5v14'></path></svg>")
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234B5563' stroke-width='2.5'><circle cx='12' cy='12' r='9' stroke='white' stroke-width='1' fill='none'></circle><path d='M5 12h14'></path><path d='M12 5v14'></path></svg>")
       12 12,
     auto;
+}
+
+/* Navigation arrow cursor for PowerPoint slides */
+.arrow-cursor-left {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2'><circle cx='12' cy='12' r='10' stroke='%232563EB' fill='rgba(219, 234, 254, 0.7)'></circle><path d='M14 8l-6 6 6 6' stroke-linecap='round' stroke-linejoin='round'></path></svg>")
+      16 16,
+    pointer;
+}
+
+.arrow-cursor-right {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2'><circle cx='12' cy='12' r='10' stroke='%232563EB' fill='rgba(219, 234, 254, 0.7)'></circle><path d='M10 8l6 6-6 6' stroke-linecap='round' stroke-linejoin='round'></path></svg>")
+      16 16,
+    pointer;
 }
 
 /* PowerPoint slide styles */

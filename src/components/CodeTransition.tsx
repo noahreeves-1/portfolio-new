@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import React from "react";
 
 export default function CodeTransition() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -105,15 +106,18 @@ export default function CodeTransition() {
               ...To Developer
             </h3>
             <p className="text-slate-300 mb-4">
-              I discovered my passion for coding, solving complex problems, and
-              building software that makes a difference. The transition
-              wasn&apos;t always easy, but the journey has been incredibly
-              rewarding.
+              I always wanted to learn how to code, and the pandemic offered the
+              perfect opportunity. I took a leap of faith, quit my job, and
+              dedicated myself to learning through The Odin Project, an
+              open-source coding bootcamp where I mastered the fundamentals of
+              full-stack web development. The journey&apos;t always easy, but it
+              has been incredibly rewarding.
             </p>
             <div className="bg-slate-900 p-4 rounded text-teal-400 font-mono text-sm shadow-inner border-l-4 border-teal-500">
               <p>
-                &ldquo;Let&apos;s refactor this to use async/await and implement
-                proper error handling.&rdquo;
+                &ldquo;Just deployed my React app with a Node.js backend. The
+                Odin Project&apos;s JavaScript curriculum really prepared me for
+                building full-stack applications.&rdquo;
               </p>
             </div>
           </div>

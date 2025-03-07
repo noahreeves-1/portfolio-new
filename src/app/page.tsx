@@ -21,11 +21,12 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <main className="min-h-screen bg-slate-900 text-white">
       <PowerPointHero />
       <CodeTransition />
       <ProjectsSection />
+      {/* <SkillsSection /> */}
       <ContactSection />
-    </>
+    </main>
   );
 }

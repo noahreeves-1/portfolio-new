@@ -21,7 +21,7 @@ export default function AboutPage() {
                 />
               </div>
               <div>
-                <h2 className="text-2xl font-bold mb-4">Your Name</h2>
+                <h2 className="text-2xl font-bold mb-4">Noah Kim</h2>
                 <p className="text-slate-300 mb-4">
                   From management consultant to self-taught developer, my
                   journey has been one of continuous learning and growth.

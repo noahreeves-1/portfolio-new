@@ -92,7 +92,7 @@ function MovingGradient() {
       vec3 colorC = vec3(0.059, 0.09, 0.165); // #0f172a (dark slate)
       
       // Use the y coordinate for the gradient with a subtle wave
-      float wave = sin(vUv.x * 3.0 + time * 0.2) * 0.05;
+      float wave = sin(vUv.x * 3.0 + time * 0.1) * 0.05;
       float pos = vUv.y + wave;
       
       vec3 color;
@@ -119,7 +119,7 @@ function MovingGradient() {
       uniforms.time.value = time;
 
       // Slightly move the gradient over time
-      meshRef.current.position.y = Math.sin(time * 0.2) * 0.1;
+      meshRef.current.position.y = Math.sin(time * 0.1) * 0.1;
     }
   });
 
@@ -140,7 +140,7 @@ export default function HeroBackground() {
     <div className="absolute inset-0 -z-10">
       <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
         <MovingGradient />
-        <Stars count={1000} speed={0.2} />
+        <Stars count={1000} speed={0.1} />
       </Canvas>
     </div>
   );
