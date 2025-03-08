@@ -1243,19 +1243,19 @@ export default function PowerPointHero() {
               >
                 <a
                   href="https://github.com/noahreeves-1"
-                  className="text-gray-600 hover:text-[#333333] transform transition-transform hover:scale-110 opacity-80"
+                  className="text-gray-600 hover:text-[#333333] transform transition-all hover:scale-110 opacity-80 hover:opacity-100"
                 >
                   <FaGithub size={36} />
                 </a>
                 <a
                   href="https://linkedin.com/in/noahh-kim"
-                  className="text-gray-600 hover:text-[#0077B5] transform transition-transform hover:scale-110 opacity-80"
+                  className="text-gray-600 hover:text-[#0077B5] transform transition-all hover:scale-110 opacity-80 hover:opacity-100"
                 >
                   <FaLinkedin size={36} />
                 </a>
                 <a
                   href="https://x.com/thenoahkim"
-                  className="text-gray-600 hover:text-[#1DA1F2] transform transition-transform hover:scale-110 opacity-80"
+                  className="text-gray-600 hover:text-[#1DA1F2] transform transition-all hover:scale-110 opacity-80 hover:opacity-100"
                 >
                   <FaTwitter size={36} />
                 </a>
@@ -1534,6 +1534,51 @@ export default function PowerPointHero() {
         return null;
     }
   };
+
+  // Add event listener for custom "resetSlides" event
+  useEffect(() => {
+    // Define the event handler to reset slides
+    const handleResetSlides = () => {
+      if (currentSlide !== 0) {
+        console.log("Resetting slides to index 0");
+        setTransitioning(true);
+
+        // Fade out current slide
+        if (contentRef.current) {
+          gsap.to(contentRef.current, {
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+              setCurrentSlide(0);
+
+              // Fade in first slide
+              gsap.fromTo(
+                contentRef.current as HTMLElement,
+                { opacity: 0 },
+                {
+                  opacity: 1,
+                  duration: 0.3,
+                  onComplete: () => setTransitioning(false),
+                }
+              );
+            },
+          });
+        } else {
+          // Fallback if contentRef is not available
+          setCurrentSlide(0);
+          setTimeout(() => setTransitioning(false), 300);
+        }
+      }
+    };
+
+    // Add event listener for custom event
+    window.addEventListener("resetSlides", handleResetSlides);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      window.removeEventListener("resetSlides", handleResetSlides);
+    };
+  }, [currentSlide]); // Re-create handler if currentSlide changes
 
   return (
     <section className="h-screen flex flex-col items-center justify-center overflow-hidden relative powerpoint-cursor">

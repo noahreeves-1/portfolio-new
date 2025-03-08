@@ -43,6 +43,14 @@ export default function Navbar() {
           className={`text-xl font-bold text-slate-900 ${
             !scrolled ? "text-shadow" : "text-white"
           }`}
+          onClick={(e) => {
+            // Only dispatch event if already on homepage
+            if (window.location.pathname === "/") {
+              e.preventDefault(); // Prevent default Link behavior if on homepage
+              // Dispatch custom event to reset slides
+              window.dispatchEvent(new Event("resetSlides"));
+            }
+          }}
         >
           Noah Kim
         </Link>
