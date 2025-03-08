@@ -183,6 +183,28 @@ export default function PowerPointHero() {
     // Add a style tag to the document head
     const styleTag = document.createElement("style");
     styleTag.innerHTML = `
+      /* Journey Map Slide Specific Styles */
+      .journey-map-slide .journey-checkpoint .bg-blue-500,
+      .journey-map-slide .journey-checkpoint .rounded-full,
+      .journey-map-slide .journey-checkpoint .left-content,
+      .journey-map-slide .journey-checkpoint .right-content,
+      .journey-map-slide h2,
+      .journey-map-slide h3,
+      .journey-map-slide p.text-blue-400,
+      .journey-map-slide .absolute.left-0.top-0.bottom-0,
+      .journey-map-slide .absolute.bottom-0.right-0 {
+        opacity: 0;
+      }
+      
+      /* Make entire journey map content initially invisible if not active */
+      .journey-map-slide:not(.active) {
+        visibility: hidden;
+      }
+      
+      .journey-map-slide.active {
+        visibility: visible;
+      }
+      
       .initially-hidden {
         opacity: 0 !important;
       }
@@ -285,9 +307,10 @@ export default function PowerPointHero() {
         animation: slideInLeft 0.6s ease-out 1.4s forwards;
       }
       
-      .bullet-slide.active .cities-section {
+      /* Removing the cities-section CSS animation to prevent double animation */
+      /* .bullet-slide.active .cities-section {
         animation: slideInUp 0.8s ease-out 1.6s forwards;
-      }
+      } */
       
       .bullet-slide.active .corner-graphic {
         animation: fadeIn 1s ease-out 1.5s forwards;
@@ -300,6 +323,8 @@ export default function PowerPointHero() {
         transform-origin: left;
       }
       
+      /* Removing these CSS animations to prevent double animations */
+      /* 
       .journey-map-slide.active h2 {
         animation: fadeIn 0.8s ease-out forwards;
       }
@@ -362,7 +387,7 @@ export default function PowerPointHero() {
       .journey-map-slide.active .absolute.bottom-0.right-0 {
         animation: fadeIn 1s ease-out 1.5s forwards;
         opacity: 0.1 !important;
-      }
+      } */
     `;
     document.head.appendChild(styleTag);
 
@@ -410,165 +435,189 @@ export default function PowerPointHero() {
     if (slides[currentSlide]?.template === "journeyMap" && !transitioning) {
       console.log("Animating journey map slide");
 
-      // Force all initially-hidden elements to be visible after animations
+      // Ensure slide is visible
+      const journeyMapSlide = document.querySelector(".journey-map-slide");
+      if (journeyMapSlide) {
+        journeyMapSlide.classList.add("active");
+      }
+
+      // Explicitly hide all journey map elements first to ensure they're not visible
+      const journeyMapElements = document.querySelectorAll(
+        ".journey-checkpoint .bg-blue-500, " +
+          ".journey-checkpoint .rounded-full, " +
+          ".journey-checkpoint .left-content, " +
+          ".journey-checkpoint .right-content, " +
+          ".journey-map-slide h2, " +
+          ".journey-map-slide h3, " +
+          ".journey-map-slide p.text-blue-400, " +
+          ".journey-map-slide .absolute.left-0.top-0.bottom-0, " +
+          ".journey-map-slide .absolute.bottom-0.right-0"
+      );
+
+      journeyMapElements.forEach((el) => {
+        (el as HTMLElement).style.opacity = "0";
+      });
+
+      // Make elements visible with a short delay to ensure they're all hidden first
       setTimeout(() => {
-        const hiddenElements = document.querySelectorAll(".initially-hidden");
-        hiddenElements.forEach((el) => {
-          (el as HTMLElement).style.opacity = "1";
-        });
-      }, 2000); // Wait for all animations to complete
-
-      // Animate the title, subtitle, and one-liner
-      const title = document.querySelector(".journey-map-slide h2");
-      const subtitle = document.querySelector(".journey-map-slide h3");
-      const oneLiner = document.querySelector(
-        ".journey-map-slide p.text-blue-400"
-      );
-
-      if (title) {
-        gsap.fromTo(
-          title,
-          { opacity: 0, y: -20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power2.out",
-          }
+        // First animate the accent bar
+        const accentBar = document.querySelector(
+          ".journey-map-slide .absolute.left-0.top-0.bottom-0"
         );
-      }
-
-      if (subtitle) {
-        gsap.fromTo(
-          subtitle,
-          { opacity: 0, y: -15 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            delay: 0.2,
-            ease: "power2.out",
-          }
-        );
-      }
-
-      if (oneLiner) {
-        gsap.fromTo(
-          oneLiner,
-          { opacity: 0, y: -10 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            delay: 0.4,
-            ease: "power2.out",
-          }
-        );
-      }
-
-      // Animate the timeline segments
-      const timelineSegments = document.querySelectorAll(
-        ".journey-checkpoint .bg-blue-500"
-      );
-      console.log("Timeline segments found:", timelineSegments.length);
-      timelineSegments.forEach((segment, index) => {
-        // Determine if this is the last segment (connecting to the last marker)
-        const isLastSegment = index === timelineSegments.length - 1;
-
-        gsap.fromTo(
-          segment,
-          { scaleY: 0, transformOrigin: "top", opacity: 0 },
-          {
-            scaleY: 1,
-            opacity: 1,
-            duration: isLastSegment ? 0.6 : 0.5, // Slightly longer animation for the last segment
-            delay: 0.6 + 0.2 * index, // Increased delay to start after header animations
-            ease: "power2.inOut",
-            transformOrigin: "top",
-          }
-        );
-      });
-
-      // Animate checkpoints appearing
-      const checkpoints = document.querySelectorAll(".journey-checkpoint");
-      checkpoints.forEach((checkpoint, index) => {
-        // Animate the content
-        let contentDiv;
-        if (index % 2 === 0) {
-          // For left side content (even indices)
-          contentDiv = checkpoint.querySelector(".left-content");
-        } else {
-          // For right side content (odd indices)
-          contentDiv = checkpoint.querySelector(".right-content");
+        if (accentBar) {
+          gsap.fromTo(
+            accentBar,
+            { scaleX: 0, transformOrigin: "left", opacity: 0 },
+            {
+              scaleX: 1,
+              opacity: 0.8,
+              duration: 0.6,
+              ease: "power2.inOut",
+            }
+          );
         }
 
-        if (contentDiv) {
+        // Then animate the title, subtitle, and one-liner
+        const title = document.querySelector(".journey-map-slide h2");
+        const subtitle = document.querySelector(".journey-map-slide h3");
+        const oneLiner = document.querySelector(
+          ".journey-map-slide p.text-blue-400"
+        );
+
+        if (title) {
           gsap.fromTo(
-            contentDiv,
-            { opacity: 0, x: index % 2 === 0 ? 20 : -20 },
+            title,
+            { opacity: 0, y: -20 },
             {
               opacity: 1,
-              x: 0,
+              y: 0,
               duration: 0.8,
-              delay: 0.9 + index * 0.2, // Increased delay to start after timeline animations
-              ease: "back.out(1.7)",
+              delay: 0.3,
+              ease: "power2.out",
             }
           );
         }
 
-        // Animate the circle
-        const circle = checkpoint.querySelector(".rounded-full");
-        if (circle) {
+        if (subtitle) {
           gsap.fromTo(
-            circle,
-            { opacity: 0, scale: 0.5 },
+            subtitle,
+            { opacity: 0, y: -15 },
             {
               opacity: 1,
-              scale: 1,
-              duration: 0.5,
-              delay: 0.7 + index * 0.2, // Increased delay to start after header animations
-              ease: "back.out(1.7)",
+              y: 0,
+              duration: 0.8,
+              delay: 0.5,
+              ease: "power2.out",
             }
           );
         }
-      });
 
-      // Animate the PowerPoint design element (bottom corner graphic)
-      const cornerGraphic = document.querySelector(
-        ".journey-map-slide .absolute.bottom-0.right-0"
-      );
-      if (cornerGraphic) {
-        gsap.fromTo(
-          cornerGraphic,
-          { opacity: 0, scale: 0.8 },
-          {
-            opacity: 0.1, // Match the original opacity of 0.10
-            scale: 1,
-            duration: 1,
-            delay: 1.5,
-            ease: "power2.out",
-          }
-        );
-      }
+        if (oneLiner) {
+          gsap.fromTo(
+            oneLiner,
+            { opacity: 0, y: -10 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              delay: 0.7,
+              ease: "power2.out",
+            }
+          );
+        }
 
-      // Animate the left side accent bar
-      const accentBar = document.querySelector(
-        ".journey-map-slide .absolute.left-0.top-0.bottom-0"
-      );
-      if (accentBar) {
-        gsap.fromTo(
-          accentBar,
-          { scaleX: 0, transformOrigin: "left", opacity: 0 },
-          {
-            scaleX: 1,
-            opacity: 0.8, // Match the original opacity-80 class
-            duration: 0.8,
-            ease: "power2.inOut",
-          }
+        // Now start the journey map animations - first animate the vertical timeline segments
+        setTimeout(() => {
+          // Animate the timeline segments
+          const timelineSegments = document.querySelectorAll(
+            ".journey-checkpoint .bg-blue-500"
+          );
+          console.log("Timeline segments found:", timelineSegments.length);
+          timelineSegments.forEach((segment, index) => {
+            gsap.fromTo(
+              segment,
+              { scaleY: 0, transformOrigin: "top", opacity: 0 },
+              {
+                scaleY: 1,
+                opacity: 1,
+                duration: 0.4,
+                delay: 0.1 * index,
+                ease: "power2.inOut",
+                transformOrigin: "top",
+              }
+            );
+          });
+
+          // Animate checkpoints appearing
+          const checkpoints = document.querySelectorAll(".journey-checkpoint");
+          checkpoints.forEach((checkpoint, index) => {
+            // Animate the circle first
+            const circle = checkpoint.querySelector(".rounded-full");
+            if (circle) {
+              gsap.fromTo(
+                circle,
+                { opacity: 0, scale: 0.5 },
+                {
+                  opacity: 1,
+                  scale: 1,
+                  duration: 0.4,
+                  delay: 0.2 + 0.1 * index,
+                  ease: "back.out(1.2)",
+                }
+              );
+            }
+
+            // Then animate the content
+            let contentDiv;
+            if (index % 2 === 0) {
+              // For left side content (even indices)
+              contentDiv = checkpoint.querySelector(".left-content");
+            } else {
+              // For right side content (odd indices)
+              contentDiv = checkpoint.querySelector(".right-content");
+            }
+
+            if (contentDiv) {
+              gsap.fromTo(
+                contentDiv,
+                { opacity: 0, x: index % 2 === 0 ? -20 : 20 },
+                {
+                  opacity: 1,
+                  x: 0,
+                  duration: 0.6,
+                  delay: 0.3 + 0.1 * index,
+                  ease: "power2.out",
+                }
+              );
+            }
+          });
+        }, 1000); // Start the journey map animations after header content is shown
+
+        // Animate the PowerPoint design element (bottom corner graphic) last
+        const cornerGraphic = document.querySelector(
+          ".journey-map-slide .absolute.bottom-0.right-0"
         );
-      } else {
-        console.log("Left accent bar not found");
-      }
+        if (cornerGraphic) {
+          gsap.fromTo(
+            cornerGraphic,
+            { opacity: 0, scale: 0.8 },
+            {
+              opacity: 0.1,
+              scale: 1,
+              duration: 1,
+              delay: 2.0,
+              ease: "power2.out",
+            }
+          );
+        }
+
+        // Force all elements to be visible after animations complete as a backup
+        setTimeout(() => {
+          journeyMapElements.forEach((el) => {
+            (el as HTMLElement).style.opacity = "1";
+          });
+        }, 3000);
+      }, 100); // Short delay before starting animations
     }
   }, [currentSlide, transitioning]);
 
@@ -732,6 +781,23 @@ export default function PowerPointHero() {
               if (slides[nextIndex].template === "journeyMap") {
                 setTimeout(() => {
                   journeyMapSlide.classList.add("active");
+
+                  // Reset opacity of journey map elements for a clean start
+                  const journeyMapElements = document.querySelectorAll(
+                    ".journey-checkpoint .bg-blue-500, " +
+                      ".journey-checkpoint .rounded-full, " +
+                      ".journey-checkpoint .left-content, " +
+                      ".journey-checkpoint .right-content, " +
+                      ".journey-map-slide h2, " +
+                      ".journey-map-slide h3, " +
+                      ".journey-map-slide p.text-blue-400, " +
+                      ".journey-map-slide .absolute.left-0.top-0.bottom-0, " +
+                      ".journey-map-slide .absolute.bottom-0.right-0"
+                  );
+
+                  journeyMapElements.forEach((el) => {
+                    (el as HTMLElement).style.opacity = "0";
+                  });
                 }, 100);
               }
             }
@@ -804,6 +870,23 @@ export default function PowerPointHero() {
               if (slides[nextIndex].template === "journeyMap") {
                 setTimeout(() => {
                   journeyMapSlide.classList.add("active");
+
+                  // Reset opacity of journey map elements for a clean start
+                  const journeyMapElements = document.querySelectorAll(
+                    ".journey-checkpoint .bg-blue-500, " +
+                      ".journey-checkpoint .rounded-full, " +
+                      ".journey-checkpoint .left-content, " +
+                      ".journey-checkpoint .right-content, " +
+                      ".journey-map-slide h2, " +
+                      ".journey-map-slide h3, " +
+                      ".journey-map-slide p.text-blue-400, " +
+                      ".journey-map-slide .absolute.left-0.top-0.bottom-0, " +
+                      ".journey-map-slide .absolute.bottom-0.right-0"
+                  );
+
+                  journeyMapElements.forEach((el) => {
+                    (el as HTMLElement).style.opacity = "0";
+                  });
                 }, 100);
               }
             }
@@ -874,6 +957,23 @@ export default function PowerPointHero() {
               if (slides[nextIndex].template === "journeyMap") {
                 setTimeout(() => {
                   journeyMapSlide.classList.add("active");
+
+                  // Reset opacity of journey map elements for a clean start
+                  const journeyMapElements = document.querySelectorAll(
+                    ".journey-checkpoint .bg-blue-500, " +
+                      ".journey-checkpoint .rounded-full, " +
+                      ".journey-checkpoint .left-content, " +
+                      ".journey-checkpoint .right-content, " +
+                      ".journey-map-slide h2, " +
+                      ".journey-map-slide h3, " +
+                      ".journey-map-slide p.text-blue-400, " +
+                      ".journey-map-slide .absolute.left-0.top-0.bottom-0, " +
+                      ".journey-map-slide .absolute.bottom-0.right-0"
+                  );
+
+                  journeyMapElements.forEach((el) => {
+                    (el as HTMLElement).style.opacity = "0";
+                  });
                 }, 100);
               }
             }
@@ -957,6 +1057,23 @@ export default function PowerPointHero() {
               if (slides[prevIndex].template === "journeyMap") {
                 setTimeout(() => {
                   journeyMapSlide.classList.add("active");
+
+                  // Reset opacity of journey map elements for a clean start
+                  const journeyMapElements = document.querySelectorAll(
+                    ".journey-checkpoint .bg-blue-500, " +
+                      ".journey-checkpoint .rounded-full, " +
+                      ".journey-checkpoint .left-content, " +
+                      ".journey-checkpoint .right-content, " +
+                      ".journey-map-slide h2, " +
+                      ".journey-map-slide h3, " +
+                      ".journey-map-slide p.text-blue-400, " +
+                      ".journey-map-slide .absolute.left-0.top-0.bottom-0, " +
+                      ".journey-map-slide .absolute.bottom-0.right-0"
+                  );
+
+                  journeyMapElements.forEach((el) => {
+                    (el as HTMLElement).style.opacity = "0";
+                  });
                 }, 100);
               }
             }
@@ -1027,6 +1144,23 @@ export default function PowerPointHero() {
               if (slides[prevIndex].template === "journeyMap") {
                 setTimeout(() => {
                   journeyMapSlide.classList.add("active");
+
+                  // Reset opacity of journey map elements for a clean start
+                  const journeyMapElements = document.querySelectorAll(
+                    ".journey-checkpoint .bg-blue-500, " +
+                      ".journey-checkpoint .rounded-full, " +
+                      ".journey-checkpoint .left-content, " +
+                      ".journey-checkpoint .right-content, " +
+                      ".journey-map-slide h2, " +
+                      ".journey-map-slide h3, " +
+                      ".journey-map-slide p.text-blue-400, " +
+                      ".journey-map-slide .absolute.left-0.top-0.bottom-0, " +
+                      ".journey-map-slide .absolute.bottom-0.right-0"
+                  );
+
+                  journeyMapElements.forEach((el) => {
+                    (el as HTMLElement).style.opacity = "0";
+                  });
                 }, 100);
               }
             }
@@ -1097,6 +1231,23 @@ export default function PowerPointHero() {
               if (slides[prevIndex].template === "journeyMap") {
                 setTimeout(() => {
                   journeyMapSlide.classList.add("active");
+
+                  // Reset opacity of journey map elements for a clean start
+                  const journeyMapElements = document.querySelectorAll(
+                    ".journey-checkpoint .bg-blue-500, " +
+                      ".journey-checkpoint .rounded-full, " +
+                      ".journey-checkpoint .left-content, " +
+                      ".journey-checkpoint .right-content, " +
+                      ".journey-map-slide h2, " +
+                      ".journey-map-slide h3, " +
+                      ".journey-map-slide p.text-blue-400, " +
+                      ".journey-map-slide .absolute.left-0.top-0.bottom-0, " +
+                      ".journey-map-slide .absolute.bottom-0.right-0"
+                  );
+
+                  journeyMapElements.forEach((el) => {
+                    (el as HTMLElement).style.opacity = "0";
+                  });
                 }, 100);
               }
             }
@@ -1156,7 +1307,7 @@ export default function PowerPointHero() {
       case "code":
         return <FaLaptopCode className="text-blue-600" size={24} />;
       case "travel":
-        return <FaPlane className="text-blue-100" size={24} />;
+        return <FaPlane className="text-blue-600" size={24} />;
       case "money":
         return <FaMoneyBillWave className="text-blue-600" size={24} />;
       default:
