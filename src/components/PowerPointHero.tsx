@@ -1044,22 +1044,17 @@ export default function PowerPointHero() {
 
                 {/* Middle area for plane flight path - simplified to one parent container */}
                 <div className="flex-grow relative h-12 plane-container">
-                  {/* Plane positioned inside with explicit styling to rotate it correctly */}
+                  {/* Plane positioned inside with explicit styling for vertical centering */}
                   <div
                     className="absolute plane-icon-wrapper"
                     style={{
                       left: "0",
-                      top: "0",
+                      top: "50%",
+                      transform: "translateY(-50%)",
                       opacity: 0,
                     }}
                   >
-                    <FaPlane
-                      size={24}
-                      className="text-blue-500"
-                      style={{
-                        transform: "rotate(0deg)", // Ensure plane is facing right
-                      }}
-                    />
+                    <FaPlane size={24} className="text-blue-500" />
                   </div>
                 </div>
 
