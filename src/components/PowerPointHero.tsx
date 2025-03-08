@@ -372,6 +372,27 @@ export default function PowerPointHero() {
     };
   }, []);
 
+  // Add an effect to handle initial slide rendering/animations
+  useEffect(() => {
+    // Short delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      const currentTemplate = slides[currentSlide].template;
+      const slideElement = document.querySelector(`.${currentTemplate}-slide`);
+
+      if (slideElement && !transitioning) {
+        // Force a reflow to ensure animations will run
+        void (slideElement as HTMLElement).offsetWidth;
+
+        // Add active class to initial slide
+        slideElement.classList.add("active");
+
+        console.log(`Added active class to initial ${currentTemplate} slide`);
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []); // Empty dependency array means this runs once on mount
+
   // Automatically advance slides with a delay
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -547,6 +568,134 @@ export default function PowerPointHero() {
         );
       } else {
         console.log("Left accent bar not found");
+      }
+    }
+  }, [currentSlide, transitioning]);
+
+  // Handle bullet slide animations when the slide appears
+  useEffect(() => {
+    // Only run animations when transitioning is false (after slide transition completes)
+    if (slides[currentSlide]?.template === "bullet" && !transitioning) {
+      console.log("Animating bullet slide");
+
+      // Animate the title, subtitle, and one-liner
+      const title = document.querySelector(".bullet-slide h2");
+      const subtitle = document.querySelector(".bullet-slide h3");
+      const oneLiner = document.querySelector(".bullet-slide p.text-blue-400");
+
+      if (title) {
+        gsap.fromTo(
+          title,
+          { opacity: 0, y: -20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          }
+        );
+      }
+
+      if (subtitle) {
+        gsap.fromTo(
+          subtitle,
+          { opacity: 0, y: -15 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: 0.2,
+            ease: "power2.out",
+          }
+        );
+      }
+
+      if (oneLiner) {
+        gsap.fromTo(
+          oneLiner,
+          { opacity: 0, y: -10 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: 0.4,
+            ease: "power2.out",
+          }
+        );
+      }
+
+      // Animate bullet points
+      const bulletPoints = document.querySelectorAll(
+        ".bullet-slide .bullet-point"
+      );
+      bulletPoints.forEach((point, index) => {
+        gsap.fromTo(
+          point,
+          { opacity: 0, x: -20 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            delay: 0.6 + index * 0.2,
+            ease: "power2.out",
+          }
+        );
+      });
+
+      // Animate the cities section if it exists
+      const citiesSection = document.querySelector(
+        ".bullet-slide .cities-section"
+      );
+      if (citiesSection) {
+        gsap.fromTo(
+          citiesSection,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: 0.6 + (bulletPoints.length || 0) * 0.2,
+            ease: "power2.out",
+          }
+        );
+      }
+
+      // Animate the PowerPoint design element (bottom corner graphic)
+      const cornerGraphic = document.querySelector(
+        ".bullet-slide .corner-graphic"
+      );
+      if (cornerGraphic) {
+        gsap.fromTo(
+          cornerGraphic,
+          { opacity: 0, scale: 0.8 },
+          {
+            opacity: 0.1,
+            scale: 1,
+            duration: 1,
+            delay: 1.5,
+            ease: "power2.out",
+          }
+        );
+      }
+
+      // Animate the left side accent bar - KEY FIX
+      const accentBar = document.querySelector(
+        ".bullet-slide .absolute.left-0.top-0.bottom-0"
+      );
+      if (accentBar) {
+        gsap.fromTo(
+          accentBar,
+          { scaleX: 0, transformOrigin: "left", opacity: 0 },
+          {
+            scaleX: 1,
+            opacity: 0.8,
+            duration: 0.8,
+            ease: "power2.inOut",
+          }
+        );
+        console.log("Animated bullet slide left accent bar");
+      } else {
+        console.log("Bullet slide left accent bar not found");
       }
     }
   }, [currentSlide, transitioning]);
@@ -1007,7 +1156,7 @@ export default function PowerPointHero() {
       case "code":
         return <FaLaptopCode className="text-blue-600" size={24} />;
       case "travel":
-        return <FaPlane className="text-blue-500" size={24} />;
+        return <FaPlane className="text-blue-100" size={24} />;
       case "money":
         return <FaMoneyBillWave className="text-blue-600" size={24} />;
       default:
