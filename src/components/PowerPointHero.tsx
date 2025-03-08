@@ -13,6 +13,8 @@ import {
   FaLaptopCode,
   FaPlane,
   FaMoneyBillWave,
+  FaBriefcase,
+  FaLaptop,
 } from "react-icons/fa";
 
 // Define checkpoint type for journey map
@@ -39,7 +41,7 @@ const slides: Slide[] = [
     id: 1,
     title: "My Journey",
     subtitle: "Management Consultant to Software Engineer",
-    oneLiner: "💼 ➡️ 💻",
+    oneLiner: "",
     content: "",
     template: "title",
     color: "bg-white",
@@ -66,7 +68,8 @@ const slides: Slide[] = [
       {
         icon: "money",
         title: "Financially Secure",
-        description: "I felt like I had enough money to take the leap of faith",
+        description:
+          "I felt like I had enough of a nest egg to take the leap of faith",
       },
       {
         icon: "travel",
@@ -129,6 +132,11 @@ export default function PowerPointHero() {
         const bulletSlide = document.querySelector(".bullet-slide");
         if (bulletSlide) {
           bulletSlide.classList.add("active");
+        }
+      } else if (slides[currentSlide].template === "title") {
+        const titleSlide = document.querySelector(".title-slide");
+        if (titleSlide) {
+          titleSlide.classList.add("active");
         }
       }
     }, 500);
@@ -199,19 +207,43 @@ export default function PowerPointHero() {
         to { opacity: 1; transform: translateY(0); }
       }
       
-      @keyframes scaleIn {
-        from { opacity: 0; transform: scale(0.5); }
-        to { opacity: 1; transform: scale(1); }
+      @keyframes slideInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
       
-      @keyframes growVertical {
-        from { opacity: 1; transform: scaleY(0); }
-        to { opacity: 1; transform: scaleY(1); }
+      /* Animations for Title Slide */
+      .title-slide.active h1 {
+        animation: slideInDown 0.8s ease-out forwards;
       }
       
-      @keyframes growHorizontal {
-        from { opacity: 0.8; transform: scaleX(0); }
-        to { opacity: 0.8; transform: scaleX(1); }
+      .title-slide.active .subtitle {
+        animation: fadeIn 0.8s ease-out 0.3s forwards;
+      }
+      
+      .title-slide.active .icon-container {
+        animation: fadeIn 0.8s ease-out 0.6s forwards;
+      }
+      
+      .title-slide.active .briefcase-icon {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      
+      .title-slide.active .laptop-icon {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      
+      /* Plane animation - Fixed direction */
+      @keyframes planeArc {
+        0% { left: 0; opacity: 0; }
+        10% { left: 0; opacity: 1; }
+        90% { left: calc(100% - 40px); opacity: 1; }
+        100% { left: calc(100% - 40px); opacity: 0; }
+      }
+      
+      .title-slide.active .plane-icon-wrapper {
+        animation: planeArc 4s ease-in-out 1.5s forwards;
+        animation-iteration-count: infinite;
       }
       
       /* Animations for Bullet Slide */
@@ -570,6 +602,22 @@ export default function PowerPointHero() {
               }
             }
 
+            // Reset any active title slide animations
+            const titleSlide = document.querySelector(".title-slide");
+            if (titleSlide) {
+              titleSlide.classList.remove("active");
+
+              // Force a reflow to restart animations if needed
+              void (titleSlide as HTMLElement).offsetWidth;
+
+              // Add active class if this is a title slide
+              if (slides[nextIndex].template === "title") {
+                setTimeout(() => {
+                  titleSlide.classList.add("active");
+                }, 100);
+              }
+            }
+
             gsap.fromTo(
               contentRef.current,
               { opacity: 0, x: -100 },
@@ -626,6 +674,22 @@ export default function PowerPointHero() {
               }
             }
 
+            // Reset any active title slide animations
+            const titleSlide = document.querySelector(".title-slide");
+            if (titleSlide) {
+              titleSlide.classList.remove("active");
+
+              // Force a reflow to restart animations if needed
+              void (titleSlide as HTMLElement).offsetWidth;
+
+              // Add active class if this is a title slide
+              if (slides[nextIndex].template === "title") {
+                setTimeout(() => {
+                  titleSlide.classList.add("active");
+                }, 100);
+              }
+            }
+
             gsap.fromTo(
               contentRef.current,
               { opacity: 0, y: 50 },
@@ -676,6 +740,22 @@ export default function PowerPointHero() {
               if (slides[nextIndex].template === "bullet") {
                 setTimeout(() => {
                   bulletSlide.classList.add("active");
+                }, 100);
+              }
+            }
+
+            // Reset any active title slide animations
+            const titleSlide = document.querySelector(".title-slide");
+            if (titleSlide) {
+              titleSlide.classList.remove("active");
+
+              // Force a reflow to restart animations if needed
+              void (titleSlide as HTMLElement).offsetWidth;
+
+              // Add active class if this is a title slide
+              if (slides[nextIndex].template === "title") {
+                setTimeout(() => {
+                  titleSlide.classList.add("active");
                 }, 100);
               }
             }
@@ -747,6 +827,22 @@ export default function PowerPointHero() {
               }
             }
 
+            // Reset any active title slide animations
+            const titleSlide = document.querySelector(".title-slide");
+            if (titleSlide) {
+              titleSlide.classList.remove("active");
+
+              // Force a reflow to restart animations if needed
+              void (titleSlide as HTMLElement).offsetWidth;
+
+              // Add active class if this is a title slide
+              if (slides[prevIndex].template === "title") {
+                setTimeout(() => {
+                  titleSlide.classList.add("active");
+                }, 100);
+              }
+            }
+
             gsap.fromTo(
               contentRef.current,
               { opacity: 0, x: 100 },
@@ -797,6 +893,22 @@ export default function PowerPointHero() {
               if (slides[prevIndex].template === "bullet") {
                 setTimeout(() => {
                   bulletSlide.classList.add("active");
+                }, 100);
+              }
+            }
+
+            // Reset any active title slide animations
+            const titleSlide = document.querySelector(".title-slide");
+            if (titleSlide) {
+              titleSlide.classList.remove("active");
+
+              // Force a reflow to restart animations if needed
+              void (titleSlide as HTMLElement).offsetWidth;
+
+              // Add active class if this is a title slide
+              if (slides[prevIndex].template === "title") {
+                setTimeout(() => {
+                  titleSlide.classList.add("active");
                 }, 100);
               }
             }
@@ -855,6 +967,22 @@ export default function PowerPointHero() {
               }
             }
 
+            // Reset any active title slide animations
+            const titleSlide = document.querySelector(".title-slide");
+            if (titleSlide) {
+              titleSlide.classList.remove("active");
+
+              // Force a reflow to restart animations if needed
+              void (titleSlide as HTMLElement).offsetWidth;
+
+              // Add active class if this is a title slide
+              if (slides[prevIndex].template === "title") {
+                setTimeout(() => {
+                  titleSlide.classList.add("active");
+                }, 100);
+              }
+            }
+
             gsap.fromTo(
               contentRef.current,
               { opacity: 0, scale: 0.8 },
@@ -892,29 +1020,99 @@ export default function PowerPointHero() {
     switch (slide.template) {
       case "title":
         return (
-          <div className="flex flex-col items-center justify-center h-full text-center px-4">
-            <h1 className="text-6xl md:text-8xl font-bold mb-8 text-blue-700 tracking-tight leading-tight">
-              {slide.title}
-            </h1>
-            <p className="text-2xl md:text-4xl mb-10 text-slate-500 font-semibold tracking-wide">
-              {slide.subtitle}
-            </p>
-            {slide.content && (
-              <>
-                <p className="text-xl md:text-2xl mb-4 text-blue-400 italic">
-                  {slide.oneLiner}
-                </p>
-                <p className="text-xl md:text-2xl text-gray-700 max-w-3xl font-light leading-relaxed">
-                  {typeof slide.content === "string" ? slide.content : ""}
-                </p>
-              </>
-            )}
-            {!slide.content && (
-              <p className="text-4xl md:text-6xl mb-4">{slide.oneLiner}</p>
-            )}
-            {/* Professional PowerPoint design element */}
-            <div className="absolute bottom-10 right-10 w-36 h-36 border-8 border-blue-200 rounded-full opacity-20"></div>
-            <div className="absolute top-10 left-10 w-24 h-24 border-8 border-blue-200 rounded-full opacity-20"></div>
+          <div
+            className={`flex flex-col items-center justify-center h-full text-center px-4 relative title-slide ${
+              !transitioning && slides[currentSlide].template === "title"
+                ? "active"
+                : ""
+            }`}
+          >
+            {/* Clean, minimal background */}
+            <div className="absolute inset-0 bg-gradient-to-br">
+              {/* Icons container with justify-between */}
+              <div
+                className="absolute top-40 w-full flex justify-between items-center px-12"
+                id="icons-container"
+              >
+                {/* Left icon (briefcase) */}
+                <div
+                  className="relative journey-icon briefcase-icon"
+                  style={{ opacity: 0 }}
+                >
+                  <FaBriefcase size={48} className="text-gray-600" />
+                </div>
+
+                {/* Middle area for plane flight path - simplified to one parent container */}
+                <div className="flex-grow relative h-12 plane-container">
+                  {/* Plane positioned inside with explicit styling to rotate it correctly */}
+                  <div
+                    className="absolute plane-icon-wrapper"
+                    style={{
+                      left: "0",
+                      top: "0",
+                      opacity: 0,
+                    }}
+                  >
+                    <FaPlane
+                      size={24}
+                      className="text-blue-500"
+                      style={{
+                        transform: "rotate(0deg)", // Ensure plane is facing right
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Right icon (laptop) */}
+                <div
+                  className="journey-icon laptop-icon relative"
+                  style={{ opacity: 0 }}
+                >
+                  <FaLaptop size={48} className="text-gray-600" />
+                </div>
+              </div>
+            </div>
+
+            {/* Main content */}
+            <div className="z-10 relative">
+              <h1
+                className="text-6xl md:text-8xl font-bold mb-8 text-blue-700 tracking-tight leading-tight"
+                style={{ opacity: 0 }}
+              >
+                {slide.title}
+              </h1>
+              <p
+                className="text-2xl md:text-4xl mb-10 text-slate-500 font-semibold tracking-wide subtitle"
+                style={{ opacity: 0 }}
+              >
+                {slide.subtitle}
+              </p>
+
+              {/* Social media icons */}
+              <div
+                className="flex justify-center space-x-8 mt-8 icon-container"
+                style={{ opacity: 0 }}
+              >
+                <a
+                  href="https://github.com/noahreeves-1"
+                  className="text-gray-600 hover:text-[#333333] transition-colors transform transition-transform hover:scale-110"
+                >
+                  <FaGithub size={36} />
+                </a>
+                <a
+                  href="https://linkedin.com/in/noahh-kim"
+                  className="text-gray-600 hover:text-[#0077B5] transition-colors transform transition-transform hover:scale-110"
+                >
+                  <FaLinkedin size={36} />
+                </a>
+                <a
+                  href="https://x.com/thenoahkim"
+                  className="text-gray-600 hover:text-[#1DA1F2] transition-colors transform transition-transform hover:scale-110"
+                >
+                  <FaTwitter size={36} />
+                </a>
+              </div>
+            </div>
           </div>
         );
 
