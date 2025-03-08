@@ -1007,7 +1007,7 @@ export default function PowerPointHero() {
       case "code":
         return <FaLaptopCode className="text-blue-600" size={24} />;
       case "travel":
-        return <FaPlane className="text-blue-600" size={24} />;
+        return <FaPlane className="text-blue-500" size={24} />;
       case "money":
         return <FaMoneyBillWave className="text-blue-600" size={24} />;
       default:
@@ -1040,7 +1040,10 @@ export default function PowerPointHero() {
                   className="relative journey-icon briefcase-icon"
                   style={{ opacity: 0 }}
                 >
-                  <FaBriefcase size={48} className="text-white" />
+                  <FaBriefcase
+                    size={48}
+                    className="text-white drop-shadow-lg"
+                  />
                 </div>
 
                 {/* Middle area for plane flight path - simplified to one parent container */}
@@ -1064,7 +1067,7 @@ export default function PowerPointHero() {
                   className="journey-icon laptop-icon relative"
                   style={{ opacity: 0 }}
                 >
-                  <FaLaptop size={48} className="text-white" />
+                  <FaLaptop size={48} className="text-white drop-shadow-lg" />
                 </div>
               </div>
             </div>

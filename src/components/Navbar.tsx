@@ -38,12 +38,17 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-teal-400">
+        <Link
+          href="/"
+          className={`text-xl font-bold text-slate-900 ${
+            !scrolled ? "text-shadow" : "text-white"
+          }`}
+        >
           Noah Kim
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-8">
+        <nav className="hidden md:flex gap-8 absolute left-1/2 transform -translate-x-1/2">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -52,8 +57,8 @@ export default function Navbar() {
                 pathname === link.href
                   ? "text-teal-400"
                   : scrolled
-                  ? "text-white hover:text-teal-400"
-                  : "text-blue-700 hover:text-teal-400"
+                  ? "text-white hover:text-teal-400 font-semibold"
+                  : "text-slate-900 font-black hover:text-teal-400"
               }`}
             >
               {link.name}
@@ -61,9 +66,21 @@ export default function Navbar() {
           ))}
         </nav>
 
+        {/* Contact Button - Desktop */}
+        <Link
+          href="/#contact"
+          className={`hidden md:block py-2 px-4 rounded-lg font-bold transition-colors ${
+            scrolled
+              ? "text-white hover:bg-teal-600"
+              : "text-slate-900 hover:bg-white"
+          }`}
+        >
+          Contact Me
+        </Link>
+
         {/* Mobile Menu Button */}
         <button
-          className={`md:hidden ${scrolled ? "text-white" : "text-blue-700"}`}
+          className={`md:hidden ${scrolled ? "text-white" : "text-slate-900"}`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
