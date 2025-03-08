@@ -1337,12 +1337,12 @@ export default function PowerPointHero() {
               >
                 {/* Left icon (briefcase) */}
                 <div
-                  className="relative journey-icon briefcase-icon"
+                  className="relative journey-icon briefcase-icon flex flex-col items-center"
                   style={{ opacity: 0 }}
                 >
                   <FaBriefcase
                     size={48}
-                    className="text-white drop-shadow-lg"
+                    className="text-white drop-shadow-lg mb-2"
                   />
                 </div>
 
@@ -1364,10 +1364,13 @@ export default function PowerPointHero() {
 
                 {/* Right icon (laptop) */}
                 <div
-                  className="journey-icon laptop-icon relative"
+                  className="journey-icon laptop-icon relative flex flex-col items-center"
                   style={{ opacity: 0 }}
                 >
-                  <FaLaptop size={48} className="text-white drop-shadow-lg" />
+                  <FaLaptop
+                    size={48}
+                    className="text-white drop-shadow-lg mb-2"
+                  />
                 </div>
               </div>
             </div>
