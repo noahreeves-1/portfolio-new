@@ -83,6 +83,12 @@ const otherSkills: Skill[] = [
     color: "bg-red-700",
     category: "Databases",
   },
+  {
+    name: "Pinecone",
+    icon: "/skills/pinecone.webp",
+    color: "bg-teal-500",
+    category: "Databases",
+  },
 
   // Backend & Server
   {
@@ -411,7 +417,7 @@ const technologyIcons: Record<string, string> = {
   Supabase: "/skills/supabase.svg",
   Redis: "/skills/redis.svg",
   ElasticSearch: "/skills/elasticsearch.svg",
-  Pinecone: "/skills/pinecone.svg",
+  Pinecone: "/skills/pinecone.webp",
 
   // DevOps/Hosting
   Docker: "/skills/docker.svg",
@@ -737,7 +743,7 @@ const projects: Project[] = [
     ],
     github: "https://github.com/noahreeves-1",
     liveUrl: "https://lexcalibur.app",
-    timeRange: "February 2024 - Present",
+    timeRange: "February 2025 - Present",
     longDescription:
       "Lexcalibur is an innovative citizen alert system that uses AI to analyze new laws and regulations, determining their relevance for individual users. Built with Next.js and styled with Tailwind CSS, it leverages Pinecone for vector database functionality and OpenAI for advanced text analysis. The platform uses Apify for web scraping to gather information about new legislation, and Supabase for backend database and authentication. The backend services are built with NestJS, and the entire system is containerized with Docker for seamless deployment. Lexcalibur helps citizens stay informed about the laws that matter most to them, providing personalized alerts based on their specific interests and circumstances.",
   },

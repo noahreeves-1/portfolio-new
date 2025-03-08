@@ -66,7 +66,7 @@ const skillsData: Record<string, Skill[]> = {
       icon: "/skills/elasticsearch.svg",
       color: "bg-yellow-500",
     },
-    { name: "Pinecone", icon: "/skills/pinecone.svg", color: "bg-blue-600" },
+    { name: "Pinecone", icon: "/skills/pinecone.webp", color: "bg-blue-600" },
     { name: "SQL Server", icon: "/skills/sqlserver.svg", color: "bg-red-700" },
   ],
   devops: [

@@ -6,7 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PowerPointHero from "@/components/PowerPointHero";
 import ProjectsSection from "@/components/ProjectsSection";
 import ContactSection from "@/components/ContactSection";
-import CodeTransition from "@/components/CodeTransition";
+// import CodeTransition from "@/components/CodeTransition";
+import CompanyCarousel from "@/components/CompanyCarousel";
 
 export default function Home() {
   useEffect(() => {
@@ -23,7 +24,8 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-900 text-white">
       <PowerPointHero />
-      <CodeTransition />
+      <CompanyCarousel />
+      {/* <CodeTransition /> */}
       <ProjectsSection />
       {/* <SkillsSection /> */}
       <ContactSection />
