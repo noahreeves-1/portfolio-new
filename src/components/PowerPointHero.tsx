@@ -16,6 +16,7 @@ import {
   FaBriefcase,
   FaLaptop,
 } from "react-icons/fa";
+import sceneryBg from "../../public/scenary.webp";
 
 // Define checkpoint type for journey map
 type Checkpoint = {
@@ -1039,7 +1040,7 @@ export default function PowerPointHero() {
                   className="relative journey-icon briefcase-icon"
                   style={{ opacity: 0 }}
                 >
-                  <FaBriefcase size={48} className="text-gray-600" />
+                  <FaBriefcase size={48} className="text-white" />
                 </div>
 
                 {/* Middle area for plane flight path - simplified to one parent container */}
@@ -1063,7 +1064,7 @@ export default function PowerPointHero() {
                   className="journey-icon laptop-icon relative"
                   style={{ opacity: 0 }}
                 >
-                  <FaLaptop size={48} className="text-gray-600" />
+                  <FaLaptop size={48} className="text-white" />
                 </div>
               </div>
             </div>
@@ -1077,7 +1078,7 @@ export default function PowerPointHero() {
                 {slide.title}
               </h1>
               <p
-                className="text-2xl md:text-4xl mb-10 text-slate-500 font-semibold tracking-wide subtitle"
+                className="text-2xl md:text-4xl mb-10 text-slate-700 font-semibold tracking-wide subtitle"
                 style={{ opacity: 0 }}
               >
                 {slide.subtitle}
@@ -1090,19 +1091,19 @@ export default function PowerPointHero() {
               >
                 <a
                   href="https://github.com/noahreeves-1"
-                  className="text-gray-600 hover:text-[#333333] transition-colors transform transition-transform hover:scale-110"
+                  className="text-gray-600 hover:text-[#333333] transform transition-transform hover:scale-110 opacity-80"
                 >
                   <FaGithub size={36} />
                 </a>
                 <a
                   href="https://linkedin.com/in/noahh-kim"
-                  className="text-gray-600 hover:text-[#0077B5] transition-colors transform transition-transform hover:scale-110"
+                  className="text-gray-600 hover:text-[#0077B5] transform transition-transform hover:scale-110 opacity-80"
                 >
                   <FaLinkedin size={36} />
                 </a>
                 <a
                   href="https://x.com/thenoahkim"
-                  className="text-gray-600 hover:text-[#1DA1F2] transition-colors transform transition-transform hover:scale-110"
+                  className="text-gray-600 hover:text-[#1DA1F2] transform transition-transform hover:scale-110 opacity-80"
                 >
                   <FaTwitter size={36} />
                 </a>
@@ -1390,10 +1391,19 @@ export default function PowerPointHero() {
         className={`absolute inset-0 w-full h-full transition-colors duration-1000 ${slides[currentSlide].color}`}
       />
 
-      {/* PowerPoint slide content */}
+      {/* PowerPoint slide content - add background image directly */}
       <div
         ref={contentRef}
-        className="relative z-10 w-full h-full max-w-7xl mx-auto flex flex-col items-center justify-center slide-container bg-white shadow-2xl"
+        className="relative z-10 w-full h-full max-w-7xl mx-auto flex flex-col items-center justify-center slide-container shadow-2xl"
+        style={{
+          ...(currentSlide === 0
+            ? {
+                backgroundImage: `url(${sceneryBg.src})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+            : {}),
+        }}
       >
         {renderSlideContent()}
       </div>
